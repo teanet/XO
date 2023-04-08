@@ -1,0 +1,50 @@
+PODS:
+  - SnapKit (5.6.0)
+  - VNBase (0.4.62):
+    - SnapKit
+    - VNEssential
+    - VNHandlers
+  - VNEssential (0.4.62)
+  - VNHandlers (0.4.62)
+
+DEPENDENCIES:
+  - SnapKit
+  - VNBase (from `https://github.com/teanet/VNBase.git`, branch `master`)
+  - VNEssential (from `https://github.com/teanet/VNBase.git`, branch `master`)
+  - VNHandlers (from `https://github.com/teanet/VNBase.git`, branch `master`)
+
+SPEC REPOS:
+  trunk:
+    - SnapKit
+
+EXTERNAL SOURCES:
+  VNBase:
+    :branch: master
+    :git: https://github.com/teanet/VNBase.git
+  VNEssential:
+    :branch: master
+    :git: https://github.com/teanet/VNBase.git
+  VNHandlers:
+    :branch: master
+    :git: https://github.com/teanet/VNBase.git
+
+CHECKOUT OPTIONS:
+  VNBase:
+    :commit: 4a6fabcd4aa3185ec96ebfa7ce11d482e4f53088
+    :git: https://github.com/teanet/VNBase.git
+  VNEssential:
+    :commit: 4a6fabcd4aa3185ec96ebfa7ce11d482e4f53088
+    :git: https://github.com/teanet/VNBase.git
+  VNHandlers:
+    :commit: 4a6fabcd4aa3185ec96ebfa7ce11d482e4f53088
+    :git: https://github.com/teanet/VNBase.git
+
+SPEC CHECKSUMS:
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  VNBase: ecdb780ed09cbe0354685c14736f2f63417fa6b7
+  VNEssential: 06c8f8019b0f34526b463694bab18dedb8d2ceb3
+  VNHandlers: 5193082eb2141873eecd9945e2c90b0bfbe727df
+
+PODFILE CHECKSUM: 530c767401b568dec725f222a6edf539553b4d94
+
+COCOAPODS: 1.12.0

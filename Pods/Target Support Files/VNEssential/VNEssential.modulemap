@@ -1,0 +1,6 @@
+framework module VNEssential {
+  umbrella header "VNEssential-umbrella.h"
+
+  export *
+  module * { export * }
+}
