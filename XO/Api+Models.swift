@@ -3,6 +3,10 @@ extension IApi {
 	func makeMove(state: GameState, completion: @escaping ResponseBlock<GameState>) -> Cancellable {
 		self.mehtod(.post, path: "/game/makeMove", body: state, completion: completion)
 	}
+	@discardableResult
+	func reset(completion: @escaping ResponseBlock<GameState>) -> Cancellable {
+		self.mehtod(.post, path: "/reset", completion: completion)
+	}
 }
 
 struct GameState: Codable {
@@ -27,4 +31,16 @@ enum Sign: String {
 		}
 	}
 }
+
+
+//POST https://led-hackathon-api.test.crm.2gis.ru/game/makeMove
+//Content-Type: application/json
+//
+//{
+//	"state": [
+//		{"x": 0, "y": 0, "value": "X"},
+//		{"x": 0, "y": 0, "value": "O"},
+//		{"x": 0, "y": 0, "value": "Empty"}
+//	]
+//}
 

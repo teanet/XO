@@ -9,10 +9,9 @@ final class XOVC: BaseVC<XOViewVM> {
 		let superStack = UIStackView()
 		superStack.isUserInteractionEnabled = true
 		superStack.axis = .vertical
-		superStack.distribution = .equalSpacing
+		superStack.distribution = .fillEqually
 		superStack.spacing = 20
 		for vmH in self.viewModel.vms {
-
 			vmH.forEach {
 				$0.onSelected = { [weak self] vm in
 					self?.viewModel.processVM(vm)
@@ -27,21 +26,15 @@ final class XOVC: BaseVC<XOViewVM> {
 			let stack = UIStackView(arrangedSubviews: views)
 			stack.axis = .horizontal
 			stack.spacing = 20
-			stack.distribution = .equalSpacing
+			stack.distribution = .fillEqually
 			superStack.addArrangedSubview(stack)
 		}
 
 		self.view.addSubview(superStack) {
 			$0.edges.equalToSuperview()
 		}
-		let gr = UITapGestureRecognizer(target: self, action: #selector(self.tap))
-		self.view.addGestureRecognizer(gr)
+		self.view.backgroundColor = .clear
 	}
-
-	@objc private func tap() {
-		print(">>>>>\(123)")
-	}
-
 
 }
 
@@ -76,6 +69,7 @@ class XOViewVM: BaseViewControllerVM {
 			$0.isSuccess = false
 		}
 		self.isDone = false
+		self.api.reset { _ in }
 	}
 
 	func processVM(_ vm: CrossVM) {
