@@ -2,14 +2,13 @@ import SnapKit
 import VNBase
 
 final class CrossView: BaseView<CrossVM> {
-	let dot = UIView()
+	let dot = UIImageView()
 
 	override init() {
 		super.init()
 
 		self.addSubview(dot) {
-			$0.center.equalToSuperview()
-			$0.size.equalTo(50)
+			$0.edges.equalToSuperview().inset(10)
 		}
 
 		let b = BlockButton { [weak self] _ in
@@ -26,19 +25,17 @@ final class CrossView: BaseView<CrossVM> {
 		super.viewModelChanged()
 		guard let vm = self.viewModel else { return }
 
-		self.backgroundColor = vm.isSuccess ? .yellow : .black
+		self.backgroundColor = (vm.isSuccess ? UIColor.yellow : .black).withAlphaComponent(0.1)
 
 		switch vm.sign {
 			case .cross:
-				self.dot.backgroundColor = .green
+				self.dot.image = .named("X")
 			case .zero:
-				self.dot.backgroundColor = .red
+				self.dot.image = .named("O")
 			case .none:
-				self.dot.backgroundColor = .clear
+				self.dot.image = nil
 		}
-
 	}
-
 
 }
 

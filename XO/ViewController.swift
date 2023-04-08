@@ -45,9 +45,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 		super.viewWillAppear(animated)
 		let configuration = ARImageTrackingConfiguration()
 		configuration.trackingImages = [
-			ARReferenceImage(UIImage(named: "qr-code1")!.cgImage!, orientation: .up, physicalWidth: 0.3)
+//			ARReferenceImage(UIImage(named: "qr-code1")!.cgImage!, orientation: .up, physicalWidth: 0.3),
+			ARReferenceImage(UIImage(named: "board")!.cgImage!, orientation: .up, physicalWidth: 1),
 		]
-		configuration.maximumNumberOfTrackedImages = 1
+		configuration.maximumNumberOfTrackedImages = 2
 		sv.session.run(configuration)
 	}
 

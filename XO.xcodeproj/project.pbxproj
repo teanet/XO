@@ -144,10 +144,8 @@
 				733A3BEF29E12EF8007D20B7 /* Assets.xcassets */,
 				733A3BF129E12EF8007D20B7 /* LaunchScreen.storyboard */,
 				733A3BF429E12EF8007D20B7 /* Info.plist */,
-				733A3C1629E1410C007D20B7 /* CrossView.swift */,
-				733A3C1A29E16F3C007D20B7 /* XOVC.swift */,
+				733A3C2229E1F556007D20B7 /* Game */,
 				733A3C1C29E17078007D20B7 /* Api+Models.swift */,
-				733A3C2029E1F1DC007D20B7 /* HelpVC.swift */,
 			);
 			path = XO;
 			sourceTree = "<group>";
@@ -167,6 +165,16 @@
 				733A3C0929E12EF8007D20B7 /* XOUITestsLaunchTests.swift */,
 			);
 			path = XOUITests;
+			sourceTree = "<group>";
+		};
+		733A3C2229E1F556007D20B7 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				733A3C1629E1410C007D20B7 /* CrossView.swift */,
+				733A3C1A29E16F3C007D20B7 /* XOVC.swift */,
+				733A3C2029E1F1DC007D20B7 /* HelpVC.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
