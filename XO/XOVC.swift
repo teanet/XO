@@ -3,6 +3,8 @@ import VNBase
 
 final class XOVC: BaseVC<XOViewVM> {
 
+	override var navigationBarStyle: NavigationBarStyle? { NavigationBarStyle() }
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -33,7 +35,7 @@ final class XOVC: BaseVC<XOViewVM> {
 		self.view.addSubview(superStack) {
 			$0.edges.equalToSuperview()
 		}
-		self.view.backgroundColor = .clear
+		self.view.backgroundColor = .white
 	}
 
 }
@@ -69,7 +71,13 @@ class XOViewVM: BaseViewControllerVM {
 			$0.isSuccess = false
 		}
 		self.isDone = false
-		self.api.reset { _ in }
+//		self.api.reset { _ in }
+	}
+
+	func playFeedback(_ feedbackType: UINotificationFeedbackGenerator.FeedbackType) {
+		let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+		notificationFeedbackGenerator.prepare()
+		notificationFeedbackGenerator.notificationOccurred(feedbackType)
 	}
 
 	func processVM(_ vm: CrossVM) {
@@ -79,9 +87,12 @@ class XOViewVM: BaseViewControllerVM {
 
 		let value = vm.sign?.rawValue ?? "Empty"
 		let state = GameState(state: [GameMove(x: vm.x, y: vm.y, value: value)])
-		self.api.makeMove(state: state) { r in
-			print(">>>>>\(r)")
-		}
+//		self.api.makeMove(state: state) { r in
+//			print(">>>>>\(r)")
+//		}
+
+		let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+		selectionFeedbackGenerator.selectionChanged()
 
 		self.currentSign.toggle()
 		self.checkCondition()
@@ -105,6 +116,11 @@ class XOViewVM: BaseViewControllerVM {
 		if let diagonal = self.checkDiagonal() {
 			self.winRows(diagonal)
 		}
+
+		if self.allVMs.first(where: { $0.sign == nil }) == nil {
+			self.playFeedback(.error)
+			self.reset()
+		}
 	}
 
 	private func winRows(_ rows: [CrossVM]) {
@@ -112,6 +128,10 @@ class XOViewVM: BaseViewControllerVM {
 			row.isSuccess = true
 		}
 		self.isDone = true
+		self.playFeedback(.success)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+			self.reset()
+		}
 	}
 
 	private func checkLine(at idx: Int) -> [CrossVM]? {

@@ -25,11 +25,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 		sv.delegate = self
 //		sv.showsStatistics = true
 
-		self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.reset))
+		self.navigationItem.rightBarButtonItems = [
+			UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.reset)),
+			UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.helpMe)),
+		]
+
 	}
 
 	@objc private func reset() {
 		self.vm.reset()
+	}
+
+	@objc private func helpMe() {
+
+		self.navigationController?.pushViewController(HelpVC(), animated: true)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -88,14 +97,9 @@ extension ViewController {
 			self.addChild(arVC)
 			arVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 500)
 			self.view.addSubview(arVC.view)
+			arVC.view.backgroundColor = .clear
 			self.show(hostingVC: arVC, on: node)
-			let gr = UITapGestureRecognizer(target: self, action: #selector(self.tap))
-			arVC.view.addGestureRecognizer(gr)
 		}
-	}
-
-	@objc private func tap() {
-		print(">>>>>\(123)")
 	}
 
 	func show(hostingVC: UIViewController, on node: SCNNode) {

@@ -21,6 +21,7 @@
 		733A3C1B29E16F3C007D20B7 /* XOVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733A3C1A29E16F3C007D20B7 /* XOVC.swift */; };
 		733A3C1D29E17078007D20B7 /* Api+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733A3C1C29E17078007D20B7 /* Api+Models.swift */; };
 		733A3C1F29E18607007D20B7 /* SwiftUIARCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733A3C1E29E18607007D20B7 /* SwiftUIARCardView.swift */; };
+		733A3C2129E1F1DC007D20B7 /* HelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733A3C2029E1F1DC007D20B7 /* HelpVC.swift */; };
 		C14C0B92B6A6659F468F7A85 /* Pods_XO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E68C01C53BCDB528811B57 /* Pods_XO.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		733A3C1A29E16F3C007D20B7 /* XOVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XOVC.swift; sourceTree = "<group>"; };
 		733A3C1C29E17078007D20B7 /* Api+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Api+Models.swift"; sourceTree = "<group>"; };
 		733A3C1E29E18607007D20B7 /* SwiftUIARCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIARCardView.swift; sourceTree = "<group>"; };
+		733A3C2029E1F1DC007D20B7 /* HelpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpVC.swift; sourceTree = "<group>"; };
 		9970C5C0F12046B68D94263A /* Pods-XO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XO.release.xcconfig"; path = "Target Support Files/Pods-XO/Pods-XO.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,6 +147,7 @@
 				733A3C1629E1410C007D20B7 /* CrossView.swift */,
 				733A3C1A29E16F3C007D20B7 /* XOVC.swift */,
 				733A3C1C29E17078007D20B7 /* Api+Models.swift */,
+				733A3C2029E1F1DC007D20B7 /* HelpVC.swift */,
 			);
 			path = XO;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				733A3BE929E12EF6007D20B7 /* SceneDelegate.swift in Sources */,
 				733A3C1929E142E4007D20B7 /* Api.swift in Sources */,
 				733A3C1F29E18607007D20B7 /* SwiftUIARCardView.swift in Sources */,
+				733A3C2129E1F1DC007D20B7 /* HelpVC.swift in Sources */,
 				733A3C1729E1410C007D20B7 /* CrossView.swift in Sources */,
 				733A3C1B29E16F3C007D20B7 /* XOVC.swift in Sources */,
 			);
