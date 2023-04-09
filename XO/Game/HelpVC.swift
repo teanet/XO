@@ -15,7 +15,7 @@ class HelpVC: UIViewController {
 
 		self.view.backgroundColor = .white
 
-		let vc = XOVC(viewModel: XOViewVM())
+		let vc = XOVC(viewModel: XOViewVM(insets: .zero))
 		self.dgs_add(vc: vc, view: self.view) {
 			$0.center.equalToSuperview()
 			$0.size.equalTo(350)

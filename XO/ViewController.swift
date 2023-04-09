@@ -5,9 +5,10 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
 
-	let vm = XOViewVM()
+	let vm = XOViewVM(insets: UIEdgeInsets(top: 0, left: 0, bottom: 1550, right: 0))
 
 	@IBOutlet weak var sv: ARSCNView!
+	let aspectH: CGFloat = 5.0
 //	lazy var xoVC = XOVC(viewModel: self.vm)
 //	lazy var sceneView = ARSCNView(frame: self.view.bounds)
 
@@ -47,6 +48,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 		configuration.trackingImages = [
 //			ARReferenceImage(UIImage(named: "qr-code1")!.cgImage!, orientation: .up, physicalWidth: 0.3),
 			ARReferenceImage(UIImage(named: "board")!.cgImage!, orientation: .up, physicalWidth: 1),
+//			ARReferenceImage(UIImage(named: "sun_city")!.cgImage!, orientation: .up, physicalWidth: 1),
 		]
 		configuration.maximumNumberOfTrackedImages = 2
 		sv.session.run(configuration)
@@ -83,7 +85,7 @@ extension ViewController {
 		let node = SCNNode()
 		guard let imageAnchor = anchor as? ARImageAnchor else { return nil }
 		let plane = SCNPlane(width: imageAnchor.referenceImage.physicalSize.width,
-							 height: imageAnchor.referenceImage.physicalSize.height)
+							 height: imageAnchor.referenceImage.physicalSize.height * aspectH)
 		let planeNode = SCNNode(geometry: plane)
 		planeNode.eulerAngles.x = -.pi / 2
 		createHostingController(for: planeNode)
@@ -96,7 +98,7 @@ extension ViewController {
 			let arVC = XOVC(viewModel: self.vm)
 			arVC.willMove(toParent: self)
 			self.addChild(arVC)
-			arVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 500)
+			arVC.view.frame = CGRect(x: 0, y: 0, width: 500, height: 500 * self.aspectH)
 			self.view.addSubview(arVC.view)
 			arVC.view.backgroundColor = .clear
 			self.show(hostingVC: arVC, on: node)

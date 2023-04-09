@@ -5,7 +5,7 @@ extension IApi {
 	}
 	@discardableResult
 	func reset(completion: @escaping ResponseBlock<GameState>) -> Cancellable {
-		self.mehtod(.post, path: "/reset", completion: completion)
+		self.mehtod(.post, path: "/game/reset", completion: completion)
 	}
 }
 

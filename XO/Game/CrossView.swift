@@ -25,7 +25,7 @@ final class CrossView: BaseView<CrossVM> {
 		super.viewModelChanged()
 		guard let vm = self.viewModel else { return }
 
-		self.backgroundColor = (vm.isSuccess ? UIColor.yellow : .black).withAlphaComponent(0.1)
+		self.backgroundColor = (vm.isSuccess ? UIColor.yellow : .green).withAlphaComponent(0.5)
 
 		switch vm.sign {
 			case .cross:

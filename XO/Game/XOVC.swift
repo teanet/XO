@@ -33,7 +33,7 @@ final class XOVC: BaseVC<XOViewVM> {
 		}
 
 		self.view.addSubview(superStack) {
-			$0.edges.equalToSuperview()
+			$0.edges.equalToSuperview().inset(self.viewModel.insets)
 		}
 		self.view.backgroundColor = .white
 	}
@@ -64,6 +64,12 @@ class XOViewVM: BaseViewControllerVM {
 
 	var currentSign: Sign = .cross
 	var isDone: Bool = false
+	let insets: UIEdgeInsets
+
+	init(insets: UIEdgeInsets) {
+		self.insets = insets
+		super.init()
+	}
 
 	func reset() {
 		self.allVMs.forEach {
@@ -71,7 +77,7 @@ class XOViewVM: BaseViewControllerVM {
 			$0.isSuccess = false
 		}
 		self.isDone = false
-//		self.api.reset { _ in }
+		self.api.reset { _ in }
 	}
 
 	func playFeedback(_ feedbackType: UINotificationFeedbackGenerator.FeedbackType) {
@@ -87,9 +93,9 @@ class XOViewVM: BaseViewControllerVM {
 
 		let value = vm.sign?.rawValue ?? "Empty"
 		let state = GameState(state: [GameMove(x: vm.x, y: vm.y, value: value)])
-//		self.api.makeMove(state: state) { r in
-//			print(">>>>>\(r)")
-//		}
+		self.api.makeMove(state: state) { r in
+			print(">>>>>\(r)")
+		}
 
 		let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
 		selectionFeedbackGenerator.selectionChanged()
