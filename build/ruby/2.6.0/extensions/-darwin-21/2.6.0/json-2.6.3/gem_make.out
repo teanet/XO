@@ -1,0 +1,13 @@
+current directory: /Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/json-2.6.3/ext/json
+/Users/teanet/.rbenv/versions/2.6.0/bin/ruby -I /Users/teanet/.rbenv/versions/2.6.0/lib/ruby/2.6.0 -r ./siteconf20230409-28801-ajoxli.rb extconf.rb
+creating Makefile
+
+current directory: /Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/json-2.6.3/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/json-2.6.3/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/json-2.6.3/ext/json
+make "DESTDIR=" install

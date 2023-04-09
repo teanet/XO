@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="00: Verifying fastlane version" time="0.000574">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="01: default_platform" time="0.000358">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="02: Verifying fastlane version" time="0.000496">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="03: default_platform" time="0.000239">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="04: Switch to ios setup_new_session lane" time="0.000224">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="05: app_store_connect_api_key" time="0.003458">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="06: app_store_connect_api_key" time="0.001835">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="07: get_certificates" time="1.08167">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="08: get_provisioning_profile" time="2.145514">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="09: latest_testflight_build_number" time="2.29594">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="10: get_version_number" time="0.099161">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="11: git checkout -B feature/2" time="0.036403">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="12: Switch to ios increment_and_push lane" time="0.000297">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="13: get_build_number" time="1.269773">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="14: increment_build_number" time="1.383657">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="15: Switch to ios commit_bump lane" time="0.000262">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="16: commit_version_bump" time="1.048838">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="17: build_app" time="42.40811">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="18: changelog_from_git_commits" time="0.02645">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="19: app_store_connect_api_key" time="0.002258">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="20: upload_to_testflight" time="32.120579">
+        
+          <failure message="/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:229:in `chdir'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:229:in `execute_action'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;../build/ruby/2.6.0/gems/ETLane-0.1.69/Lanes/CommonFastfile:97:in `block (2 levels) in parsing_binding'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/lane.rb:33:in `call'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:49:in `block in execute'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/lane_manager.rb:47:in `cruise_lane'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/command_line_handler.rb:36:in `handle'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:354:in `run'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:43:in `start'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/gems/fastlane-2.212.1/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/bin/fastlane:23:in `load'&#10;/Users/teanet/Documents/projects/XO/build/ruby/2.6.0/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/cli/exec.rb:58:in `load'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/cli/exec.rb:58:in `kernel_load'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/cli/exec.rb:23:in `run'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/cli.rb:483:in `exec'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/cli.rb:31:in `dispatch'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/cli.rb:25:in `start'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/exe/bundle:48:in `block in &lt;top (required)&gt;'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/lib/bundler/friendly_errors.rb:120:in `with_friendly_errors'&#10;/Users/teanet/.rbenv/versions/2.6.0/lib/ruby/gems/2.6.0/gems/bundler-2.3.19/exe/bundle:36:in `&lt;top (required)&gt;'&#10;/Users/teanet/.rbenv/versions/2.6.0/bin/bundle:23:in `load'&#10;/Users/teanet/.rbenv/versions/2.6.0/bin/bundle:23:in `&lt;main&gt;'&#10;&#10;Error uploading ipa file: &#10; [Application Loader Error Output]: ERROR: Asset validation failed (90713) Missing Info.plist value. A value for the Info.plist key 'CFBundleIconName' is missing in the bundle 'xyz.nazabore.xo'. Apps built with iOS 11 or later SDK must supply app icons in an asset catalog and must also provide a value for this Info.plist key. For more information see http://help.apple.com/xcode/mac/current/#/dev10510b1f7. (ID: 52114815-a724-4a47-9399-da4e501ae66a)&#10;[Application Loader Error Output]: ERROR: Asset validation failed (90022) Missing required icon file. The bundle does not contain an app icon for iPhone / iPod Touch of exactly '120x120' pixels, in .png format for iOS versions &gt;= 10.0. To support older versions of iOS, the icon may be required in the bundle outside of an asset catalog. Make sure the Info.plist file includes appropriate entries referencing the file. See https://developer.apple.com/documentation/bundleresources/information_property_list/user_interface (ID: 0110ef30-58f9-4bdf-b12e-8015fdffea75)&#10;[Application Loader Error Output]: ERROR: Asset validation failed (90023) Missing required icon file. The bundle does not contain an app icon for iPad of exactly '167x167' pixels, in .png format for iOS versions supporting iPad Pro. To support older operating systems, the icon may be required in the bundle outside of an asset catalog. Make sure the Info.plist file includes appropriate entries referencing the file. See https://developer.apple.com/documentation/bundleresources/information_property_list/user_interface (ID: 80ab904a-4d4f-41df-b458-dbfba337e22e)&#10;[Application Loader Error Output]: ERROR: Asset validation failed (90023) Missing required icon file. The bundle does not contain an app icon for iPad of exactly '152x152' pixels, in .png format for iOS versions &gt;= 10.0. To support older operating systems, the icon may be required in the bundle outside of an asset catalog. Make sure the Info.plist file includes appropriate entries referencing the file. See https://developer.apple.com/documentation/bundleresources/information_property_list/user_interface (ID: 41f4752e-99e4-4ed2-9b5c-41afefe7a262)&#10;[Application Loader Error Output]: ERROR: Asset validation failed (90704) Missing App Icon. An app icon measuring 1024 by 1024 pixels in PNG format must be included in the Asset Catalog of apps built for iOS, iPadOS, or watchOS. Without this icon, apps cannot be submitted for review. For details, see https://developer.apple.com/ios/human-interface-guidelines/icons-and-images/app-icon/. (ID: ff317664-0ad7-4eba-9d99-c20bb23027c1)&#10;[Application Loader Error Output]: Error uploading '/var/folders/nx/32g95d3s5y14m_cq5w_vjjvc0000gp/T/13259751-f344-4410-b14a-986b807be5cf.ipa'.&#10;[Application Loader Error Output]: Asset validation failed Missing Info.plist value. A value for the Info.plist key 'CFBundleIconName' is missing in the bundle 'xyz.nazabore.xo'. Apps built with iOS 11 or later SDK must supply app icons in an asset catalog and must also provide a value for this Info.plist key. For more information see http://help.apple.com/xcode/mac/current/#/dev10510b1f7. (ID: 52114815-a724-4a47-9399-da4e501ae66a) (90713)&#10;[Application Loader Error Output]: Asset validation failed Missing required icon file. The bundle does not contain an app icon for iPhone / iPod Touch of exactly '120x120' pixels, in .png format for iOS versions &gt;= 10.0. To support older versions of iOS, the icon may be required in the bundle outside of an asset catalog. Make sure the Info.plist file includes appropriate entries referencing the file. See https://developer.apple.com/documentation/bundleresources/information_property_list/user_interface (ID: 0110ef30-58f9-4bdf-b12e-8015fdffea75) (90022)&#10;[Application Loader Error Output]: Asset validation failed Missing required icon file. The bundle does not contain an app icon for iPad of exactly '167x167' pixels, in .png format for iOS versions supporting iPad Pro. To support older operating systems, the icon may be required in the bundle outside of an asset catalog. Make sure the Info.plist file includes appropriate entries referencing the file. See https://developer.apple.com/documentation/bundleresources/information_property_list/user_interface (ID: 80ab904a-4d4f-41df-b458-dbfba337e22e) (90023)&#10;[Application Loader Error Output]: Asset validation failed Missing required icon file. The bundle does not contain an app icon for iPad of exactly '152x152' pixels, in .png format for iOS versions &gt;= 10.0. To support older operating systems, the icon may be required in the bundle outside of an asset catalog. Make sure the Info.plist file includes appropriate entries referencing the file. See https://developer.apple.com/documentation/bundleresources/information_property_list/user_interface (ID: 41f4752e-99e4-4ed2-9b5c-41afefe7a262) (90023)&#10;[Application Loader Error Output]: Asset validation failed Missing App Icon. An app icon measuring 1024 by 1024 pixels in PNG format must be included in the Asset Catalog of apps built for iOS, iPadOS, or watchOS. Without this icon, apps cannot be submitted for review. For details, see https://developer.apple.com/ios/human-interface-guidelines/icons-and-images/app-icon/. (ID: ff317664-0ad7-4eba-9d99-c20bb23027c1) (90704)&#10;[Application Loader Error Output]: The call to the altool completed with a non-zero exit status: 1. This indicates a failure." />
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="21: git checkout main" time="0.036252">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="22: git pull origin main" time="2.448118">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="23: git merge feature/2" time="0.042753">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="24: git branch -D feature/2" time="0.025188">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="25: push_to_git_remote" time="2.42375">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

@@ -1,0 +1,36 @@
+app_identifier "xyz.nazabore.xo" # The bundle identifier of your app
+apple_id "e.tyutyuev@gmail.com" # Your Apple email address
+# You can run getTeamNames from CommonFastfile to get it
+team_name "Eugene Tutuev"
+team_id "HJ648XXPWE" # Developer Portal Team ID
+itc_team_id "57419804" # AppsetoreConnect Portal Team ID
+
+# https://my.slack.com/services/new/incoming-webhook/
+ENV["SLACK_URL"] = "https://hooks.slack.com/services/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" 
+ENV["FL_SLACK_ICON_URL"] = "https://www.dropbox.com/s/wty7l4og7ahb4wo/vyrty.png?dl=1"
+ENV["FL_SLACK_USERNAME"] = "ParentChild"
+ENV["PROJECT_NAME"] = "XO"
+ENV["DISTRIBUTE_GROUP_NAME"] = "beta"
+ENV["FASTLANE_SKIP_DOCS"] = "1"
+ENV["EXTENSION_BUNDLE_IDS"] = ""
+ENV["GOOGLE_SHEET_TSV"] = ""
+ENV["ET_BETA_APP_REVIEW_INFO"] = {
+	contact_email: "teanet@mail.ru",
+	contact_first_name: "Eugene",
+	demo_account_required: true,
+	contact_last_name: "Tutuev",
+	contact_phone: "79833087335",
+	demo_account_name: "teanet@mail.ru",
+	demo_account_password: "Qwer1234",
+	notes: ""
+}.to_s
+ENV["ET_BRANCH"] = "main"
+ENV["FASTLANE_HIDE_CHANGELOG"] = "true"
+
+ENV["ET_BRANCH"] = "main"
+ENV["APP_STORE_CONNECT_API_KEY_KEY_ID"] = "2AD2L7S2Z5"
+ENV["APP_STORE_CONNECT_API_KEY_ISSUER_ID"] = "69a6de80-3eba-47e3-e053-5b8c7c11a4d1"
+ENV["APP_STORE_CONNECT_API_KEY_KEY_FILEPATH"] = "./AuthKey_2AD2L7S2Z5.p8"
+#ENV["ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD"] = "false"
+
+#ENV["FL_GIT_PUSH_USE_NO_VERIFY"] = "true"

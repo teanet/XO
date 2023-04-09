@@ -1,0 +1,4 @@
+---
+BUNDLE_CLEAN: "true"
+BUNDLE_PATH: "build"
+BUNDLE_WITH: "deploy"

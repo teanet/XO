@@ -1,0 +1,31 @@
+app_identifier "" # The bundle identifier of your app
+apple_id "e.tyutyuev@gmail.com" # Your Apple email address
+# You can run getTeamNames from CommonFastfile to get it
+team_name ""
+team_id "" # Developer Portal Team ID
+itc_team_id "" # AppsetoreConnect Portal Team ID
+
+# https://my.slack.com/services/new/incoming-webhook/
+ENV["SLACK_URL"] = ""
+ENV["PROJECT_NAME"] = ""
+ENV["DISTRIBUTE_GROUP_NAME"] = ""
+ENV["FASTLANE_SKIP_DOCS"] = "1"
+ENV["EXTENSION_BUNDLE_IDS"] = ""
+ENV["GOOGLE_SHEET_TSV"] = ""
+ENV["DELIVER_REJECT_IF_POSSIBLE"] = "true"
+ENV["PILOT_BETA_APP_FEEDBACK"] = "teanet@mail.ru"
+ENV["PILOT_DISTRIBUTE_EXTERNAL"] = "false"
+ENV["PILOT_SKIP_WAITING_FOR_BUILD_PROCESSING"] = "false"
+ENV["ET_BETA_APP_REVIEW_INFO"] = {
+	contact_email: "teanet@mail.ru",
+	contact_first_name: "Eugene",
+	contact_last_name: "Tutuev",
+	contact_phone: "79833087335",
+	demo_account_required: false,
+	demo_account_name: "",
+	demo_account_password: "",
+	notes: ""
+}.to_s
+ENV["FIGMA_TOKEN"] = ""
+ENV["FIGMA_PROJECT_ID"] = ""
+

@@ -1,0 +1,86 @@
+fastlane_version "2.68.2"
+
+default_platform :ios
+lane_path = %x( bundle info ETLane --path )
+et_path = File.join(lane_path.strip, "Lanes/CommonFastfile")
+import(et_path)
+
+platform :ios do
+
+  before_all do |lane, options|
+#    xcode_select("/Applications/Xcode.app")
+  end
+
+  lane :asd do |options|
+    fastlane_require 'spaceship'
+    username = options[:username]
+    previews(username: username)
+  end
+
+  lane :qq do
+    last_commit_path = File.join(Dir.pwd, "last_commit")
+    last_commit = File.read(last_commit_path)
+    last_commit = last_commit.strip! || last_commit if last_commit
+    changelog = changelog_from_git_commits(
+      quiet: true,
+      between: [last_commit, "HEAD"],  # Optional, lets you specify a revision/tag range between which to collect commit info
+      pretty: "– %s",# Optional, lets you provide a custom format to apply to each commit when generating the changelog text
+      date_format: "short",# Optional, lets you provide an additional date format to dates within the pretty-formatted string
+      match_lightweight_tag: false,  # Optional, lets you ignore lightweight (non-annotated) tags when searching for the last tag
+      merge_commit_filtering: "exclude_merges" # Optional, lets you filter out merge commits
+    )
+    puts changelog
+    # build_number = get_build_number()
+    # version = get_version_number(target: project_name) + " (" + build_number + ")"
+    # branch_name = "feature/#{build_number}"
+    # sh("git", "checkout", "-B", branch_name)
+    # ENV["FL_CHANGELOG"] = nil
+  end
+
+  lane :setup do
+    cocoapods(
+      try_repo_update_on_error: true,
+      use_bundle_exec: true,
+    )
+    Dir.chdir ".." do
+     sh("Scripts/generate_proto.py")
+   end
+  end
+
+  lane :lok do |options|
+    lokalise_upload(
+      snapshot_version: "build-#{get_build_number()}",
+      sources: ["./Fitness/Resources/", "./Watch Extension/Resources/"],
+      languages: ["en"]
+    )
+    #languages: ["en","es-419","fr","it","pt", "ru","zh-Hans","zh-Hant"]
+  end
+
+  lane :download_lok_node do |options|
+    build_number = get_build_number()
+    branch_name = "lok/#{build_number}"
+    sh("git", "checkout", "-B", branch_name)
+    download_lok()
+    begin
+      git_commit(
+        message: "Lok",
+        path: ["./Fitness/Resources/", "./Watch Extension/Resources/"]
+      )
+      work_branch = ENV["ET_BRANCH"] || 'master'
+      sh("git", "checkout", work_branch)
+      sh("git", "pull", "origin", work_branch)
+      sh("git", "merge", branch_name)
+      sh("git", "branch", "-D", branch_name)
+      push_to_git_remote
+    rescue => ex
+      UI.error(ex)
+    end
+  end
+
+  lane :download_lok do |options|
+    lokalise(
+      destination: "./"
+    )
+  end
+end
+

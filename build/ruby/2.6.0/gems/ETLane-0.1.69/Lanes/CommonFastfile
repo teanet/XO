@@ -1,0 +1,336 @@
+fastlane_version "2.68.2"
+
+default_platform :ios
+
+platform :ios do
+
+  product_bundle_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+  project_name = ENV["PROJECT_NAME"]
+  
+  build_folder = File.join(Dir.pwd, "..", "build")
+  last_commit_path = File.join(Dir.pwd, "last_commit")
+
+  desc "Push a new beta build to TestFlight"
+  lane :beta do |options|
+    work_branch = options[:branch]|| ENV["ET_BRANCH"] || 'master'
+    distribute_group_name = options[:tf_group_name] || ENV["DISTRIBUTE_GROUP_NAME"]
+    setup_new_session(options)
+    provisioning_profile = "AppStore_#{product_bundle_identifier}"
+    username = options[:username]
+
+    if ENV["ET_USE_PROJECT"] == "true"
+      ENV["GYM_PROJECT"] = "#{project_name}.xcodeproj"
+    else
+      ENV["GYM_WORKSPACE"] = "#{project_name}.xcworkspace"
+    end
+
+    if ENV["ET_USE_COCOAPODS"] == true
+      cocoapods(repo_update: true)
+    end
+
+    api_key = app_store_connect_api_key(
+      duration: 500, # optional (maximum 1200)
+      in_house: false # optional but may be required if using match/sigh
+    )
+    ENV["SIGH_OUTPUT_PATH"] = build_folder
+    ENV["SIGH_USERNAME"] = username
+    
+    get_certificates(username: username)
+    profile_uuid = get_provisioning_profile(app_identifier: product_bundle_identifier)
+    provisioningProfiles = Hash.new
+    provisioningProfiles[product_bundle_identifier] = profile_uuid
+    extension_bundle_ids = ENV["EXTENSION_BUNDLE_IDS"].split(",")
+    for extension_bundle_id in extension_bundle_ids do
+      extension_bundle_identifier = "#{product_bundle_identifier}.#{extension_bundle_id}"
+      extension_profile_uuid = get_provisioning_profile(app_identifier: extension_bundle_identifier)
+      provisioningProfiles[extension_bundle_identifier] = extension_profile_uuid
+    end
+
+    number = latest_testflight_build_number()
+    build_number = "#{number + 1}"
+    ENV["FL_BUILD_NUMBER_BUILD_NUMBER"] = build_number
+    version = get_version_number(target: project_name) + " (" + build_number + ")"
+    branch_name = "feature/#{build_number}"
+    sh("git", "checkout", "-B", branch_name)
+    increment_and_push()
+
+    team_id = CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+    build_app(
+      export_xcargs: "PROVISIONING_PROFILE_SPECIFIER='#{provisioning_profile}' DEVELOPMENT_TEAM='#{team_id}' CODE_SIGN_STYLE='Manual'",
+      scheme: project_name,
+      output_directory: build_folder,
+      include_bitcode: false,
+      skip_profile_detection: false,
+        export_options: {
+          method: "app-store",
+          signingStyle: "manual",
+          provisioningProfiles: provisioningProfiles
+      },
+    )
+    last_commit = File.read(last_commit_path)
+    last_commit = last_commit.strip! || last_commit if last_commit
+    changelog = changelog_from_git_commits(
+      quiet: true,
+      between: [last_commit, "HEAD"],  # Optional, lets you specify a revision/tag range between which to collect commit info
+      pretty: "– %s",# Optional, lets you provide a custom format to apply to each commit when generating the changelog text
+      date_format: "short",# Optional, lets you provide an additional date format to dates within the pretty-formatted string
+      match_lightweight_tag: false,  # Optional, lets you ignore lightweight (non-annotated) tags when searching for the last tag
+      merge_commit_filtering: "exclude_merges" # Optional, lets you filter out merge commits
+    )
+    puts changelog
+
+    beta_app_review_info = {}
+    if ENV["ET_BETA_APP_REVIEW_INFO"]
+      beta_app_review_info = eval(ENV["ET_BETA_APP_REVIEW_INFO"])
+    end
+
+    if ENV["GOOGLE_SERVICES_INFO_PLIST_PATH"]
+      upload_symbols_to_crashlytics()
+    end
+
+    exception = nil
+    begin
+      app_store_connect_api_key(
+        duration: 1200, # optional (maximum 1200)
+        in_house: false # optional but may be required if using match/sigh
+      )
+      upload_to_testflight(
+        username: username,
+        beta_app_review_info: beta_app_review_info,
+        changelog: changelog,
+        groups: ["#{distribute_group_name}"]
+      )
+      tag = get_version_number(target: project_name) + "." + build_number
+      add_git_tag(
+        tag: tag
+      )
+    rescue => ex
+      exception = ex
+      UI.error(ex)
+    end
+
+    if exception == nil
+      if changelog
+        # Сохраним текущий комит
+        File.write(last_commit_path, last_git_commit[:commit_hash])
+        git_add(path: last_commit_path)
+        commit_bump(message: "Freeze changelog")
+      end
+    end
+    sh("git", "checkout", work_branch)
+    sh("git", "pull", "origin", work_branch)
+    sh("git", "merge", branch_name)
+    sh("git", "branch", "-D", branch_name)
+    push_to_git_remote
+    if exception == nil
+      post_message(changelog: changelog, version: version)
+    else
+      raise exception
+    end
+
+  end
+
+  lane :metadata do |options|
+    setup_new_session(options)
+    username = options[:username]
+    skip_screenshots = options[:skip_screenshots] != nil ? options[:skip_screenshots] : false
+    upload_preview = options[:upload_preview] != nil ? options[:upload_preview] : false
+    skip_metadata = options[:skip_metadata] != nil ? options[:skip_metadata] : false
+    google_sheet_tsv = ENV["GOOGLE_SHEET_TSV"]
+
+    metadata_path = File.join(build_folder, "metadata")
+    FileUtils.rm_rf(metadata_path)
+    screenshots_path = File.join(build_folder, "screenshots")
+    preview_path = File.join(build_folder, "previews")
+    download_screenshots = !skip_screenshots
+    if download_screenshots
+      FileUtils.rm_rf(screenshots_path)
+    end
+    lane_path = %x( bundle info ETLane --path )
+    scripts_dir = File.join(lane_path.strip, "Scripts")
+
+    Dir.chdir(scripts_dir) do
+      sh(
+        "swift", "run", "Resources", 
+        google_sheet_tsv,
+        "--output", "#{build_folder}",
+        "--download-screenshots", "#{download_screenshots}",
+        "--figma-token", "#{ENV["FIGMA_TOKEN"]}",
+        "--figma-project-id", "#{ENV["FIGMA_PROJECT_ID"]}",
+        "--figma-page", "#{ENV["FIGMA_SCREENSHOTS_PAGE_ID"]}"
+      )
+    end
+# include_in_app_purchases` flag to `false`
+# run_precheck_before_submit to false
+    ENV["DELIVER_METADATA_PATH"] = metadata_path
+    ENV["DELIVER_SCREENSHOTS_PATH"] = "#{screenshots_path}"
+    ENV["DELIVER_SKIP_METADATA"] = "#{skip_metadata}"
+    ENV["DELIVER_SKIP_SCREENSHOTS"] = "#{skip_screenshots}"
+    ENV["DELIVER_SKIP_BINARY_UPLOAD"] = "true"
+    ENV["DELIVER_FORCE"] = "true"
+    ENV["DELIVER_SUBMIT_FOR_REVIEW"] = "false"
+    ENV["DELIVER_USERNAME"] = username
+    ENV["DELIVER_IGNORE_LANGUAGE_DIRECTORY_VALIDATION"] = "true"
+    ENV["DELIVER_OVERWRITE_SCREENSHOTS"] = "true"
+    ENV["PRECHECK_INCLUDE_IN_APP_PURCHASES"] = "false"
+    ENV["DELIVER_RUN_PRECHECK_BEFORE_SUBMIT"] = "false"
+
+    begin
+      deliver(
+        # edit_live: true,
+      )
+    rescue => ex
+      UI.error(ex)
+      if ex.to_s.start_with?("The app name you entered is already being used.")
+        UI.error("Try to detect issue...")
+        deliver(
+          # edit_live: true,
+          individual_metadata_items: ['name', 'keywords', 'description'],
+        )
+      else
+      end
+    end
+
+    if upload_preview
+      ENV["FASTLANE_ITUNES_TRANSPORTER_PATH"] = "/Applications/Transporter.app/Contents/itms/"
+      ENV["FASTLANE_ITUNES_TRANSPORTER_USE_SHELL_SCRIPT"] = "1"
+      previews(username: username)
+    end
+  end
+
+  lane :post_message do |options|
+    version = options[:version] ? options[:version] : get_version_number(target: project_name) + " (" + get_build_number() + ")"
+    changelog = options[:changelog]
+    slack(
+      message: "App successfully uploaded to TestFlight.",
+      success: true,
+      default_payloads: [],
+      attachment_properties: {
+        fields: [ 
+          {
+            title: "Build number",
+            value: version,
+          },
+          {
+            title: "Changelog",
+            value: changelog,
+          },
+        ]
+      }
+    )
+  end
+
+  # fastlane action new_version bump_type:patch|minor|major
+  lane :new_version do |options|
+    bump_type = options[:bump_type] ? options[:bump_type] : "patch"
+    increment_and_push(bump_type: bump_type, push: true)
+  end
+
+  lane :increment_and_push do |options|
+    push = options[:push]
+    bump = true
+    if get_build_number() == ENV["FL_BUILD_NUMBER_BUILD_NUMBER"] 
+      bump = false
+      push = false
+    else
+      increment_build_number
+    end
+    bump_type = options[:bump_type]
+    if bump_type
+      bump = true
+      increment_version_number(
+        bump_type: bump_type
+      )
+    end
+    if bump
+      commit_bump(message: "Bump up version")  
+    end
+
+    if push
+      push_to_git_remote  
+    end    
+  end
+
+  lane :rlz_minor do 
+    rlz(bump_type: "minor")
+  end
+
+  lane :rlz do |options|
+    version = options[:version]
+    if version.to_s.empty?
+      bump_type = options[:bump_type]
+      if bump_type.to_s.empty?
+        version_bump_podspec(bump_type: "patch")
+      else
+        version_bump_podspec(bump_type: bump_type)
+      end
+      version = lane_context[SharedValues::PODSPEC_VERSION_NUMBER]
+    else
+      version_bump_podspec(version_number: version)  
+    end
+    
+    git_commit(
+      message: "Bump up version to #{version}",
+      path: ["./*"]
+    )
+    add_git_tag(
+      tag: version
+    )
+    push_to_git_remote
+    pod_push(allow_warnings: true, use_bundle_exec: true)
+  end
+
+  lane :commit_bump do |options|
+    commit_version_bump(
+      message: options[:message], 
+      force: true,
+      xcodeproj: "#{project_name}.xcodeproj"
+    )
+  end
+
+  lane :add_group_to_tf_build do |options|
+    fastlane_require 'spaceship'
+
+    spaceship = Spaceship::Tunes.login(options[:username])
+    spaceship.team_id = fastlane_itc_team_id
+    app = Spaceship::Tunes::Application.find(product_bundle_identifier)
+    build = Spaceship::TestFlight::Build.latest(app_id: app.apple_id, platform: 'ios')
+    distribute_group_name = options[:tf_group_name] || ENV["DISTRIBUTE_GROUP_NAME"]
+    group = Spaceship::TestFlight::Group.find(app_id: app.apple_id, group_name: distribute_group_name)
+    build.add_group!(group)
+    # Find team id
+    # teamInfo = spaceship.teams.select { |team| team['contentProvider']['name'].strip.downcase == team_name.strip.downcase }.first
+    # team_id = teamInfo['contentProvider']['contentProviderId'] if teamInfo
+  end
+
+  # Получить полный список всех team_id & itc_team_id нужные для Appfile
+  lane :first_time do |options|
+    require "spaceship" 
+    applePassword = options[:password]
+    apple_id = options[:username] ? username = options[:username] : CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)
+    clientTunes = Spaceship::Tunes.login(apple_id, applePassword)
+    client = Spaceship::Portal.login(apple_id, applePassword)
+
+    strClientTunes = "" 
+#    clientTunes.teams.each do |team|
+#        UI.message "#{team['contentProvider']['name']} (#{team['contentProvider']['contentProviderId']})"
+#        strClientTunes << "#{team['contentProvider']['name']} (#{team['contentProvider']['contentProviderId']})||"
+#    end 
+#    puts "ItunesTeamNames: #{strClientTunes[0..-3]}"
+
+    strDevPortal = "" 
+    client.teams.each do |team|
+        UI.message "#{team['name']} (#{team['teamId']})"
+        strDevPortal << "#{team['name']} (#{team['teamId']})||"
+    end
+    puts "DevTeamNames: #{strDevPortal[0..-3]}"
+  end
+
+  lane :setup_new_session do |options|
+    app_store_connect_api_key(
+      duration: 1200, # optional (maximum 1200)
+      in_house: false # optional but may be required if using match/sigh
+    )
+  end
+
+end
